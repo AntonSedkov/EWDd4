@@ -1,37 +1,27 @@
 package by.epam.sedkov.task2.service;
 
+import by.epam.sedkov.task2.type.TypeDirection;
+import by.epam.sedkov.task2.type.TypeSort;
+
 public class JaggedService {
-    // TODO: 24.06.2020
-    private static final String INCREASE = "INCREASE";
-    private static final String DECREASE = "DECREASE";
-    private static final String MAX = "MAX";
-    private static final String MIN = "MIN";
+
     private static final int[] DEFAULT_ARRAY = new int[0];
 
-    public boolean sortBySum(int[][] jaggedArray) {
+    public boolean sortByType(int[][] jaggedArray, TypeSort condition, TypeDirection direction) {
         if (jaggedArray != null) {
-            int[] sumArray = makeSumArray(jaggedArray);
-            sortJaggedArray(jaggedArray, sumArray);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean sortByMax(int[][] jaggedArray) {
-        if (jaggedArray != null) {
-            int[] maxArray = makeMaxMinArray(jaggedArray, MAX);
-            sortJaggedArray(jaggedArray, maxArray);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean sortByMin(int[][] jaggedArray) {
-        if (jaggedArray != null) {
-            int[] minArray = makeMaxMinArray(jaggedArray, MIN);
-            sortJaggedArray(jaggedArray, minArray);
+            int[] resultArray;
+            switch (condition) {
+                case SUM:
+                    resultArray = makeSumArray(jaggedArray);
+                    break;
+                case MAX:
+                case MIN:
+                    resultArray = makeMaxMinArray(jaggedArray, condition);
+                    break;
+                default:
+                    return false;
+            }
+            sortJaggedArray(jaggedArray, resultArray, direction);
             return true;
         } else {
             return false;
@@ -51,27 +41,7 @@ public class JaggedService {
         return sumArray;
     }
 
-    private void sortJaggedArray(int[][] jaggedArray, int[] arraySortedBy) {
-        boolean sorted = false;
-        int length = jaggedArray.length;
-        while (!sorted) {
-            sorted = true;
-            for (int i = 0; i < length - 1; i++) {
-                if (arraySortedBy[i + 1] < arraySortedBy[i]) {
-                    swapArray(jaggedArray, i, i + 1);
-                    sorted = false;
-                }
-            }
-        }
-    }
-
-    private void swapArray(int[][] toSort, int indexOne, int indexTwo) {
-        int[] tmp = toSort[indexOne];
-        toSort[indexOne] = toSort[indexTwo];
-        toSort[indexTwo] = tmp;
-    }
-
-    private int[] makeMaxMinArray(int[][] jaggedArray, String condition) {
+    private int[] makeMaxMinArray(int[][] jaggedArray, TypeSort condition) {
         int length = jaggedArray.length;
         int[] resultArray = new int[length];
         for (int i = 0; i < length; i++) {
@@ -92,4 +62,43 @@ public class JaggedService {
         }
         return resultArray;
     }
+
+    private void sortJaggedArray(int[][] jaggedArray, int[] arraySortedBy, TypeDirection direction) {
+        boolean sorted = false;
+        int length = jaggedArray.length;
+        while (!sorted) {
+            sorted = true;
+            for (int i = 0; i < length - 1; i++) {
+                if (sortCondition(arraySortedBy, i, direction)) {
+                    swapElement(arraySortedBy, i, i + 1);
+                    swapArray(jaggedArray, i, i + 1);
+                    sorted = false;
+                }
+            }
+        }
+    }
+
+    private void swapArray(int[][] toSort, int indexOne, int indexTwo) {
+        int[] tmp = toSort[indexOne];
+        toSort[indexOne] = toSort[indexTwo];
+        toSort[indexTwo] = tmp;
+    }
+
+    private void swapElement(int[] array, int indexOne, int indexTwo) {
+        int tmp = array[indexOne];
+        array[indexOne] = array[indexTwo];
+        array[indexTwo] = tmp;
+    }
+
+    private boolean sortCondition(int[] array, int index, TypeDirection direction) {
+        switch (direction) {
+            case INCREASE:
+                return array[index + 1] < array[index];
+            case DECREASE:
+                return array[index + 1] > array[index];
+            default:
+                return false;
+        }
+    }
+
 }

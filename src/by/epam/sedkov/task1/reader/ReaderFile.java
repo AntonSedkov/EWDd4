@@ -28,12 +28,11 @@ public class ReaderFile {
     }
 
     public String[] takeOneLineForArray(String[] input, int indexLine) throws ProjectException {
-        if (input != null && indexLine >= 0 && indexLine < input.length) {
-            String[] array = input[indexLine].split("\\s+");
-            return array;
-        } else {
+        if (input == null || indexLine < 0 || indexLine >= input.length) {
             throw new ProjectException("Input strings is null or incorrect index of line");
         }
+        String[] array = input[indexLine].split("\\s+");
+        return array;
     }
 
 }

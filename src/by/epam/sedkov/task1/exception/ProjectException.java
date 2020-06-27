@@ -1,6 +1,7 @@
 package by.epam.sedkov.task1.exception;
 
 public class ProjectException extends Exception {
+
     public ProjectException() {
         super();
     }

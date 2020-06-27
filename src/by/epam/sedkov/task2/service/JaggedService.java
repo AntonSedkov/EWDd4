@@ -1,4 +1,4 @@
-package by.epam.sedkov.task2;
+package by.epam.sedkov.task2.service;
 
 public class JaggedService {
     // TODO: 24.06.2020

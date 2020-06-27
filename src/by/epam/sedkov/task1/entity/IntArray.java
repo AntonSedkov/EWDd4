@@ -7,30 +7,26 @@ import java.util.StringJoiner;
 
 public class IntArray {
     private int[] array;
-    private static final int[] DEFAULT_ARRAY = new int[10];
 
-    public IntArray(int size) {
-        if (size > 0) {
-            array = new int[size];
-        } else {
-            array = DEFAULT_ARRAY;
+    public IntArray(int size) throws ProjectException {
+        if (size < 0) {
+            throw new ProjectException("Wrong array size");
         }
+        array = new int[size];
     }
 
-    public IntArray(int[] array) {
-        if (array != null) {
-            this.array = array;
-        } else {
-            array = DEFAULT_ARRAY;
+    public IntArray(int[] array) throws ProjectException {
+        if (array == null) {
+            throw new ProjectException("Array is null");
         }
+        this.array = array;
     }
 
-    public void setArray(int[] array) {
-        if (array != null) {
-            this.array = array;
-        } else {
-            this.array = DEFAULT_ARRAY;
+    public void setArray(int[] array) throws ProjectException {
+        if (array == null) {
+            throw new ProjectException("Array is null");
         }
+        this.array = array;
     }
 
     public int size() {

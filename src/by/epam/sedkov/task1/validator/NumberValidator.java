@@ -23,11 +23,14 @@ public class NumberValidator {
     }
 
     public static boolean isDifferentThreeDigit(int number) {
-        if (number / 100 > 1 && number / 1000 < 1) {
+        if (Math.abs(number / 100) > 0 && Math.abs(number / 1000) < 1) {
             int digitOne = number % 10;
             int digitTwo = number / 10 % 10;
             int digitThree = number / 100 % 10;
-            return (digitOne != digitTwo) && (digitOne != digitThree) && (digitTwo != digitThree);
+            boolean a = digitOne != digitTwo;
+            boolean b = digitOne != digitThree;
+            boolean c = digitTwo != digitThree;
+            return a && b && c;
         } else {
             return false;
         }

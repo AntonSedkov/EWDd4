@@ -62,9 +62,8 @@ public class SortingService {
     }
 
     public int binarySearch(IntArray array, int element) throws ProjectException {
-        if ((array != null)
-                && (element <= Math.max(array.getElement(0), array.getElement(array.size() - 1)))
-                && (element >= Math.min(array.getElement(0), array.getElement(array.size() - 1)))) {
+        if ((array != null) && (element <= array.getElement(0))
+                && (element >= array.getElement(array.size() - 1))) {
             int startIndex = 0;
             int endIndex = array.size() - 1;
             while (startIndex < endIndex) {
@@ -81,7 +80,7 @@ public class SortingService {
             return -(startIndex + 1);
         }
         return -1;
-    }// TODO: 24.06.2020 up-down
+    }
 
     public boolean reverseArray(IntArray array) throws ProjectException {
         if (array != null) {
